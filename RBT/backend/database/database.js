@@ -705,6 +705,61 @@ db.exec(`
   CREATE INDEX IF NOT EXISTS
     idx_provider_account_auth_bank
   ON provider_account_authorizations(bank_id);
+
+  CREATE TABLE IF NOT EXISTS account_mpins (
+  mpin_id TEXT PRIMARY KEY,
+
+  account_id TEXT NOT NULL UNIQUE,
+
+  mpin_hash TEXT NOT NULL,
+
+  failed_attempts INTEGER NOT NULL DEFAULT 0,
+
+  locked_until TEXT,
+
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+  updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+  FOREIGN KEY (account_id)
+    REFERENCES accounts(account_id)
+    ON DELETE CASCADE
+);
+
+
+CREATE INDEX IF NOT EXISTS idx_account_mpins_account
+  ON account_mpins(account_id);
+
+
+CREATE TABLE IF NOT EXISTS mpin_reset_challenges (
+  challenge_id TEXT PRIMARY KEY,
+
+  user_id TEXT NOT NULL,
+
+  otp_hash TEXT NOT NULL,
+
+  expires_at TEXT NOT NULL,
+
+  attempts INTEGER NOT NULL DEFAULT 0,
+
+  max_attempts INTEGER NOT NULL DEFAULT 5,
+
+  verified_at TEXT,
+
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+  FOREIGN KEY (user_id)
+    REFERENCES users(user_id)
+    ON DELETE CASCADE
+);
+
+
+CREATE INDEX IF NOT EXISTS idx_mpin_reset_user
+  ON mpin_reset_challenges(user_id);
+
+
+CREATE INDEX IF NOT EXISTS idx_mpin_reset_expiry
+  ON mpin_reset_challenges(expires_at);
 `);
 
 // ==================================================

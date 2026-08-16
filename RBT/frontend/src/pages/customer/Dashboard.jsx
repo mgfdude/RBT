@@ -2,9 +2,19 @@ import { useEffect, useMemo, useState } from "react";
 import {
   ArrowDownLeft,
   ArrowUpRight,
+  Building2,
+  Check,
+  ChevronRight,
+  Clipboard,
   CreditCard,
+  Eye,
+  EyeOff,
   IndianRupee,
   LoaderCircle,
+  Mail,
+  Phone,
+  ShieldCheck,
+  UserRound,
   Wallet,
 } from "lucide-react";
 
@@ -16,11 +26,12 @@ function formatCurrency(amount, currency = "INR") {
     style: "currency",
     currency,
     maximumFractionDigits: 2,
-  }).format(amount);
+  }).format(Number(amount || 0));
 }
 
 function maskAccountNumber(accountNumber) {
-  if (!accountNumber) return "••••";
+  if (!accountNumber) return "•••• •••• ••••";
+
   return `•••• •••• ${accountNumber.slice(-4)}`;
 }
 
@@ -30,6 +41,12 @@ function Dashboard() {
   const [accounts, setAccounts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  const [showBalance, setShowBalance] = useState(true);
+  const [showAccountNumber, setShowAccountNumber] =
+    useState(false);
+
+  const [copied, setCopied] = useState(false);
 
   const bankId = user?.bankId || "alpha";
 
@@ -79,159 +96,721 @@ function Dashboard() {
     );
   }, [accounts]);
 
+  const primaryAccount = accounts[0];
+
   const firstName =
     user?.fullName?.split(" ")[0] ||
     user?.username ||
     "Customer";
 
+  const fullName =
+    user?.fullName ||
+    user?.username ||
+    "Customer";
+
+  const bankName =
+    primaryAccount?.bank_name ||
+    user?.bankName ||
+    `${bankId.toUpperCase()} BANK`;
+
+  const bankIfsc =
+    primaryAccount?.ifsc_code ||
+    user?.ifscCode ||
+    "—";
+
+  const accountNumber =
+    primaryAccount?.account_number || "";
+
+  const accountType =
+    primaryAccount?.account_type || "SAVINGS";
+
+  const accountStatus =
+    primaryAccount?.status || "ACTIVE";
+
+  const currency =
+    primaryAccount?.currency || "INR";
+
+  async function copyAccountNumber() {
+    if (!accountNumber) return;
+
+    try {
+      await navigator.clipboard.writeText(
+        accountNumber
+      );
+
+      setCopied(true);
+
+      setTimeout(() => {
+        setCopied(false);
+      }, 1800);
+    } catch {
+      // Clipboard may be unavailable
+    }
+  }
+
+  function handleTransfer() {
+    window.location.href = "/transfer";
+  }
+
+  function handleWithdraw() {
+    window.location.href = "/withdraw";
+  }
+
+  function handleSetMpin() {
+    window.location.href = "/security/mpin";
+  }
+
   return (
     <main className="customer-dashboard">
+
+      {/* ============================================
+          TOP HEADER
+      ============================================ */}
+
       <header className="dashboard-header">
-        <div>
-          <p className="dashboard-eyebrow">
-            {bankId.toUpperCase()} BANK
-          </p>
 
-          <h1>
-            Welcome back, {firstName}
-          </h1>
+        <div className="dashboard-header-left">
 
-          <p className="dashboard-subtitle">
-            Here's an overview of your accounts.
-          </p>
+          <div className="bank-brand">
+            <div className="bank-brand-icon">
+              <Building2 size={19} />
+            </div>
+
+            <div>
+              <span className="bank-brand-name">
+                {bankName}
+              </span>
+
+              <span className="bank-brand-code">
+                {bankId.toUpperCase()}
+              </span>
+            </div>
+          </div>
+
+          <div className="dashboard-welcome">
+            <p className="dashboard-eyebrow">
+              CUSTOMER DASHBOARD
+            </p>
+
+            <h1>
+              Welcome back, {firstName}
+            </h1>
+
+            <p>
+              Manage your accounts and banking
+              activity from one place.
+            </p>
+          </div>
+
         </div>
 
         <div className="dashboard-user">
+
           <div className="dashboard-avatar">
             {firstName.charAt(0).toUpperCase()}
           </div>
 
-          <div>
-            <strong>{firstName}</strong>
-            <span>{user?.role || "CUSTOMER"}</span>
+          <div className="dashboard-user-info">
+            <strong>{fullName}</strong>
+
+            <span>
+              {user?.role || "CUSTOMER"}
+            </span>
           </div>
+
         </div>
+
       </header>
+
+
+      {/* ============================================
+          ERROR
+      ============================================ */}
 
       {error && (
         <div className="dashboard-error">
-          {error}
+          <span>{error}</span>
         </div>
       )}
 
-      <section className="balance-card">
-        <div className="balance-card-icon">
-          <IndianRupee size={22} />
-        </div>
 
-        <div>
-          <p>Total balance</p>
+      {/* ============================================
+          MAIN GRID
+      ============================================ */}
 
-          {loading ? (
-            <LoaderCircle
-              className="loading-icon"
-              size={30}
-            />
-          ) : (
-            <h2>
-              {formatCurrency(
-                totalBalance,
-                accounts[0]?.currency || "INR"
-              )}
-            </h2>
-          )}
-        </div>
-      </section>
+      <div className="dashboard-layout">
 
-      <section className="dashboard-section">
-        <div className="section-heading">
-          <div>
-            <h2>Your accounts</h2>
-            <p>
-              {accounts.length} account
-              {accounts.length !== 1 ? "s" : ""}
-            </p>
-          </div>
-        </div>
+        <div className="dashboard-main">
 
-        {loading ? (
-          <div className="dashboard-loading">
-            <LoaderCircle
-              className="loading-icon"
-              size={28}
-            />
+          {/* ========================================
+              BALANCE
+          ======================================== */}
 
-            <span>Loading accounts...</span>
-          </div>
-        ) : accounts.length === 0 ? (
-          <div className="empty-state">
-            <Wallet size={32} />
+          <section className="balance-card">
 
-            <h3>No accounts found</h3>
+            <div className="balance-top">
 
-            <p>
-              You don't have any active accounts
-              with this bank.
-            </p>
-          </div>
-        ) : (
-          <div className="account-grid">
-            {accounts.map((account) => (
-              <article
-                className="account-card"
-                key={account.account_id}
+              <div>
+                <p className="balance-label">
+                  Total balance
+                </p>
+
+                <div className="balance-value">
+
+                  {loading ? (
+                    <LoaderCircle
+                      size={29}
+                      className="loading-icon"
+                    />
+                  ) : showBalance ? (
+                    formatCurrency(
+                      totalBalance,
+                      currency
+                    )
+                  ) : (
+                    "₹ ••••••"
+                  )}
+
+                  {!loading && (
+                    <button
+                      type="button"
+                      className="balance-toggle"
+                      onClick={() =>
+                        setShowBalance(
+                          (value) => !value
+                        )
+                      }
+                      aria-label={
+                        showBalance
+                          ? "Hide balance"
+                          : "Show balance"
+                      }
+                    >
+                      {showBalance ? (
+                        <EyeOff size={19} />
+                      ) : (
+                        <Eye size={19} />
+                      )}
+                    </button>
+                  )}
+
+                </div>
+              </div>
+
+              <div className="balance-icon">
+                <IndianRupee size={24} />
+              </div>
+
+            </div>
+
+            <div className="balance-footer">
+
+              <span>
+                {accounts.length} active account
+                {accounts.length !== 1
+                  ? "s"
+                  : ""}
+              </span>
+
+              <span>
+                Currency: {currency}
+              </span>
+
+            </div>
+
+          </section>
+
+
+          {/* ========================================
+              QUICK ACTIONS
+          ======================================== */}
+
+          <section className="quick-actions-section">
+
+            <div className="section-title-row">
+
+              <div>
+                <h2>Quick actions</h2>
+                <p>
+                  Frequently used banking services
+                </p>
+              </div>
+
+            </div>
+
+            <div className="quick-actions-grid">
+
+              <button
+                type="button"
+                className="action-card transfer-action"
+                onClick={handleTransfer}
               >
-                <div className="account-card-top">
-                  <div className="account-icon">
-                    <CreditCard size={20} />
-                  </div>
+                <div className="action-icon">
+                  <ArrowUpRight size={22} />
+                </div>
 
-                  <span
-                    className={`account-status ${account.status.toLowerCase()}`}
-                  >
-                    {account.status}
+                <div className="action-content">
+                  <strong>Transfer money</strong>
+
+                  <span>
+                    Send money to a bank account
                   </span>
                 </div>
 
-                <div className="account-type">
-                  {account.account_type}
+                <ChevronRight size={19} />
+              </button>
+
+
+              <button
+                type="button"
+                className="action-card withdraw-action"
+                onClick={handleWithdraw}
+              >
+                <div className="action-icon">
+                  <ArrowDownLeft size={22} />
                 </div>
 
-                <div className="account-number">
-                  {maskAccountNumber(
-                    account.account_number
-                  )}
+                <div className="action-content">
+                  <strong>Withdraw</strong>
+
+                  <span>
+                    Withdraw funds from your account
+                  </span>
                 </div>
 
-                <div className="account-balance">
-                  {formatCurrency(
-                    account.balance,
-                    account.currency
-                  )}
+                <ChevronRight size={19} />
+              </button>
+
+            </div>
+
+          </section>
+
+
+          {/* ========================================
+              ACCOUNTS
+          ======================================== */}
+
+          <section className="dashboard-section">
+
+            <div className="section-title-row">
+
+              <div>
+                <h2>Your accounts</h2>
+
+                <p>
+                  {accounts.length} account
+                  {accounts.length !== 1
+                    ? "s"
+                    : ""} linked to your profile
+                </p>
+              </div>
+
+            </div>
+
+
+            {loading ? (
+
+              <div className="dashboard-loading">
+                <LoaderCircle
+                  size={28}
+                  className="loading-icon"
+                />
+
+                <span>
+                  Loading your accounts...
+                </span>
+              </div>
+
+            ) : accounts.length === 0 ? (
+
+              <div className="empty-state">
+
+                <Wallet size={34} />
+
+                <h3>No accounts found</h3>
+
+                <p>
+                  You don't have any accounts
+                  with this bank.
+                </p>
+
+              </div>
+
+            ) : (
+
+              <div className="account-list">
+
+                {accounts.map((account) => (
+
+                  <article
+                    className="account-card"
+                    key={account.account_id}
+                  >
+
+                    <div className="account-card-header">
+
+                      <div className="account-card-title">
+
+                        <div className="account-icon">
+                          <CreditCard size={20} />
+                        </div>
+
+                        <div>
+                          <strong>
+                            {account.account_type ||
+                              "SAVINGS"}
+                          </strong>
+
+                          <span>
+                            {account.currency ||
+                              "INR"} Account
+                          </span>
+                        </div>
+
+                      </div>
+
+
+                      <span
+                        className={`account-status ${(
+                          account.status || ""
+                        ).toLowerCase()}`}
+                      >
+                        <span className="status-dot" />
+
+                        {account.status}
+                      </span>
+
+                    </div>
+
+
+                    <div className="account-card-body">
+
+                      <div>
+                        <span className="account-detail-label">
+                          Account number
+                        </span>
+
+                        <strong className="account-number">
+                          {maskAccountNumber(
+                            account.account_number
+                          )}
+                        </strong>
+                      </div>
+
+
+                      <div>
+                        <span className="account-detail-label">
+                          Available balance
+                        </span>
+
+                        <strong className="account-balance">
+                          {formatCurrency(
+                            account.balance,
+                            account.currency
+                          )}
+                        </strong>
+                      </div>
+
+                    </div>
+
+                  </article>
+
+                ))}
+
+              </div>
+
+            )}
+
+          </section>
+
+
+          {/* ========================================
+              RECENT TRANSACTIONS
+          ======================================== */}
+
+          <section className="transactions-card">
+
+            <div className="section-title-row">
+
+              <div>
+                <h2>Recent transactions</h2>
+
+                <p>
+                  Your latest banking activity
+                </p>
+              </div>
+
+              <button
+                type="button"
+                className="text-button"
+              >
+                View all
+                <ChevronRight size={16} />
+              </button>
+
+            </div>
+
+
+            <div className="transaction-empty">
+
+              <div className="transaction-empty-icon">
+                <Wallet size={21} />
+              </div>
+
+              <div>
+                <strong>
+                  Transaction history
+                </strong>
+
+                <p>
+                  Your recent transfers and
+                  withdrawals will appear here.
+                </p>
+              </div>
+
+            </div>
+
+          </section>
+
+        </div>
+
+
+        {/* ==========================================
+            RIGHT SIDEBAR
+        ========================================== */}
+
+        <aside className="dashboard-sidebar">
+
+          {/* ========================================
+              ACCOUNT DETAILS
+          ======================================== */}
+
+          <section className="info-card">
+
+            <div className="info-card-header">
+
+              <div>
+                <h3>Account details</h3>
+
+                <p>
+                  Your banking information
+                </p>
+              </div>
+
+              <CreditCard size={19} />
+
+            </div>
+
+
+            <div className="details-list">
+
+              <div className="detail-row">
+
+                <span>
+                  <UserRound size={16} />
+                  Account holder
+                </span>
+
+                <strong>
+                  {fullName}
+                </strong>
+
+              </div>
+
+
+              <div className="detail-row">
+
+                <span>
+                  <Phone size={16} />
+                  Phone
+                </span>
+
+                <strong>
+                  {user?.phone || "—"}
+                </strong>
+
+              </div>
+
+
+              <div className="detail-row">
+
+                <span>
+                  <Mail size={16} />
+                  Email
+                </span>
+
+                <strong>
+                  {user?.email || "—"}
+                </strong>
+
+              </div>
+
+
+              <div className="detail-row">
+
+                <span>
+                  <Building2 size={16} />
+                  Bank ID
+                </span>
+
+                <strong>
+                  {bankId}
+                </strong>
+
+              </div>
+
+
+              <div className="detail-row">
+
+                <span>
+                  IFSC code
+                </span>
+
+                <strong>
+                  {bankIfsc}
+                </strong>
+
+              </div>
+
+
+              <div className="detail-row">
+
+                <span>
+                  Account type
+                </span>
+
+                <strong>
+                  {accountType}
+                </strong>
+
+              </div>
+
+
+              <div className="detail-row account-number-row">
+
+                <span>
+                  Account number
+                </span>
+
+                <div className="account-number-actions">
+
+                  <strong>
+                    {showAccountNumber
+                      ? accountNumber
+                      : maskAccountNumber(
+                          accountNumber
+                        )}
+                  </strong>
+
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setShowAccountNumber(
+                        (value) => !value
+                      )
+                    }
+                    aria-label={
+                      showAccountNumber
+                        ? "Hide account number"
+                        : "Show account number"
+                    }
+                  >
+                    {showAccountNumber ? (
+                      <EyeOff size={15} />
+                    ) : (
+                      <Eye size={15} />
+                    )}
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={copyAccountNumber}
+                    aria-label="Copy account number"
+                  >
+                    {copied ? (
+                      <Check size={15} />
+                    ) : (
+                      <Clipboard size={15} />
+                    )}
+                  </button>
+
                 </div>
-              </article>
-            ))}
-          </div>
-        )}
-      </section>
 
-      <section className="quick-actions">
-        <button
-          type="button"
-          className="quick-action"
-        >
-          <ArrowUpRight size={20} />
-          <span>Transfer</span>
-        </button>
+              </div>
 
-        <button
-          type="button"
-          className="quick-action"
-        >
-          <ArrowDownLeft size={20} />
-          <span>Withdraw</span>
-        </button>
-      </section>
+            </div>
+
+          </section>
+
+
+          {/* ========================================
+              SECURITY
+          ======================================== */}
+
+          <section className="security-card">
+
+            <div className="security-icon">
+              <ShieldCheck size={22} />
+            </div>
+
+            <div className="security-content">
+
+              <span className="security-label">
+                ACCOUNT SECURITY
+              </span>
+
+              <h3>
+                Secure your transactions
+              </h3>
+
+              <p>
+                Set an MPIN to authorize
+                transfers and withdrawals.
+              </p>
+
+              <button
+                type="button"
+                onClick={handleSetMpin}
+                className="security-button"
+              >
+                Set up MPIN
+                <ChevronRight size={16} />
+              </button>
+
+            </div>
+
+          </section>
+
+
+          {/* ========================================
+              ACCOUNT STATUS
+          ======================================== */}
+
+          <section className="status-card">
+
+            <div className="status-card-icon">
+              <Check size={17} />
+            </div>
+
+            <div>
+              <strong>
+                Account {accountStatus}
+              </strong>
+
+              <p>
+                Your account is currently
+                {accountStatus === "ACTIVE"
+                  ? " active and ready for transactions."
+                  : ` ${accountStatus.toLowerCase()}.`}
+              </p>
+            </div>
+
+          </section>
+
+        </aside>
+
+      </div>
+
     </main>
   );
 }

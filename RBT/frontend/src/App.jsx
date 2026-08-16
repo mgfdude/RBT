@@ -5,15 +5,25 @@ import {
   Routes,
 } from "react-router-dom";
 
-import Login from "./pages/auth/Login";
-import Dashboard from "./pages/customer/Dashboard";
+import CustomerLogin from "./pages/auth/Login";
+import AdminLogin from "./pages/admin/auth/Login";
+
+import CustomerDashboard from "./pages/customer/Dashboard";
+import AdminDashboard from "./pages/admin/Dashboard";
+import OpenAccount from "./pages/admin/OpenAccount";
+
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
     <BrowserRouter>
+
       <Routes>
-        {/* Default */}
+
+        {/* =========================================
+            DEFAULT
+            ========================================= */}
+
         <Route
           path="/"
           element={
@@ -24,33 +34,81 @@ function App() {
           }
         />
 
-        {/* Bank-specific login */}
+        {/* =========================================
+            CUSTOMER LOGIN
+            ========================================= */}
+
         <Route
           path="/login/:bankId"
-          element={<Login />}
+          element={<CustomerLogin />}
         />
 
-        {/* Customer dashboard */}
+        {/* =========================================
+            ADMIN LOGIN
+            ========================================= */}
+
+        <Route
+          path="/admin/login/:bankId"
+          element={<AdminLogin />}
+        />
+
+        {/* =========================================
+            CUSTOMER DASHBOARD
+            ========================================= */}
+
         <Route
           path="/dashboard"
           element={
-            <ProtectedRoute role="CUSTOMER">
-              <Dashboard />
+            <ProtectedRoute
+              role="CUSTOMER"
+            >
+              <CustomerDashboard />
             </ProtectedRoute>
           }
         />
 
-        {/* Temporary admin route */}
+        {/* =========================================
+            ADMIN DASHBOARD
+            ========================================= */}
+
         <Route
           path="/admin"
           element={
-            <ProtectedRoute role="ADMIN">
-              <div>Admin Dashboard</div>
+            <ProtectedRoute
+              roles={[
+                "ADMIN",
+                "MANAGER",
+              ]}
+              loginPath="/admin/login/alpha"
+            >
+              <AdminDashboard />
             </ProtectedRoute>
           }
         />
 
-        {/* Unknown routes */}
+        {/* =========================================
+            ADMIN — OPEN ACCOUNT
+            ========================================= */}
+
+        <Route
+          path="/admin/accounts/open"
+          element={
+            <ProtectedRoute
+              roles={[
+                "ADMIN",
+                "MANAGER",
+              ]}
+              loginPath="/admin/login/alpha"
+            >
+              <OpenAccount />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* =========================================
+            UNKNOWN ROUTES
+            ========================================= */}
+
         <Route
           path="*"
           element={
@@ -60,7 +118,9 @@ function App() {
             />
           }
         />
+
       </Routes>
+
     </BrowserRouter>
   );
 }

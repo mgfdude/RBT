@@ -7,6 +7,8 @@ import { AuthProvider } from "./context/AuthContext";
 import "./styles/global.css";
 import "./styles/auth.css";
 import "./styles/dashboard.css";
+import "./styles/ad-dashboard.css";
+import "./styles/open-account.css";
 
 ReactDOM.createRoot(
   document.getElementById("root")

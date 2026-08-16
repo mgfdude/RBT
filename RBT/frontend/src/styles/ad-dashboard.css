@@ -1,0 +1,1043 @@
+.ad-dashboard {
+  min-height: 100vh;
+  background: #f4f7fb;
+  color: #0f172a;
+}
+
+/* ==================================================
+   HEADER
+   ================================================== */
+
+.ad-header {
+  height: 74px;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+
+  background: #ffffff;
+  border-bottom: 1px solid #e5eaf1;
+}
+
+.ad-header-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ad-bank-logo {
+  width: 42px;
+  height: 42px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 11px;
+
+  background: #0f172a;
+  color: #ffffff;
+}
+
+.ad-header-bank-name {
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.ad-header-bank-meta {
+  margin-top: 3px;
+  color: #64748b;
+  font-size: 11px;
+}
+
+.ad-header-right {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.ad-system-status {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  color: #15803d;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.ad-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+}
+
+.ad-admin-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ad-admin-avatar {
+  width: 38px;
+  height: 38px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background: #e2e8f0;
+  color: #0f172a;
+
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.ad-admin-profile strong,
+.ad-admin-profile span {
+  display: block;
+}
+
+.ad-admin-profile strong {
+  font-size: 13px;
+}
+
+.ad-admin-profile span {
+  margin-top: 2px;
+
+  color: #64748b;
+  font-size: 11px;
+}
+
+/* ==================================================
+   CONTAINER
+   ================================================== */
+
+.ad-container {
+  width: min(1440px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: 38px 0 60px;
+}
+
+/* ==================================================
+   INTRO
+   ================================================== */
+
+.ad-page-intro {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 30px;
+
+  margin-bottom: 30px;
+}
+
+.ad-eyebrow,
+.ad-section-label {
+  color: #2563eb;
+
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.ad-page-intro h1 {
+  margin: 7px 0 0;
+
+  font-size: 30px;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+}
+
+.ad-page-intro p {
+  margin: 9px 0 0;
+
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* ==================================================
+   BUTTONS
+   ================================================== */
+
+.ad-primary-button {
+  height: 44px;
+  padding: 0 17px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  border: 0;
+  border-radius: 10px;
+
+  background: #2563eb;
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 20px rgba(37, 99, 235, 0.2);
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background 0.15s ease;
+}
+
+.ad-primary-button:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+  box-shadow:
+    0 10px 24px rgba(37, 99, 235, 0.25);
+}
+
+/* ==================================================
+   ERROR
+   ================================================== */
+
+.ad-error {
+  margin-bottom: 22px;
+  padding: 13px 15px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+
+  background: #fff1f2;
+  color: #b91c1c;
+
+  font-size: 13px;
+}
+
+.ad-error button {
+  margin-left: auto;
+
+  border: 0;
+  background: transparent;
+
+  color: #991b1b;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+/* ==================================================
+   STATISTICS
+   ================================================== */
+
+.ad-stat-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 16px;
+}
+
+.ad-stat-card {
+  min-height: 128px;
+  padding: 20px;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+
+  background: #ffffff;
+  border: 1px solid #e4e9f0;
+  border-radius: 15px;
+
+  box-shadow:
+    0 5px 18px rgba(15, 23, 42, 0.035);
+}
+
+.ad-stat-icon {
+  width: 40px;
+  height: 40px;
+
+  flex-shrink: 0;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 10px;
+
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.ad-stat-card.primary .ad-stat-icon {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.ad-stat-card.success .ad-stat-icon {
+  background: #ecfdf5;
+  color: #16a34a;
+}
+
+.ad-stat-card.danger .ad-stat-icon {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.ad-stat-content span,
+.ad-stat-content small {
+  display: block;
+}
+
+.ad-stat-content span {
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.ad-stat-content strong {
+  display: block;
+
+  margin-top: 5px;
+
+  font-size: 23px;
+  letter-spacing: -0.025em;
+}
+
+.ad-stat-content small {
+  margin-top: 5px;
+
+  color: #94a3b8;
+  font-size: 10px;
+}
+
+/* ==================================================
+   SECTION
+   ================================================== */
+
+.ad-section {
+  margin-top: 36px;
+}
+
+.ad-section-heading {
+  margin-bottom: 17px;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.ad-section-heading h2 {
+  margin: 5px 0 0;
+
+  font-size: 19px;
+  letter-spacing: -0.025em;
+}
+
+.ad-section-heading p {
+  margin: 4px 0 0;
+
+  color: #64748b;
+  font-size: 12px;
+}
+
+.ad-section-count {
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* ==================================================
+   QUICK ACTIONS
+   ================================================== */
+
+.ad-action-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+.ad-action-button {
+  min-height: 66px;
+  padding: 0 16px;
+
+  display: flex;
+  align-items: center;
+  gap: 11px;
+
+  border: 1px solid #e1e7ef;
+  border-radius: 12px;
+
+  background: #ffffff;
+  color: #0f172a;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease,
+    transform 0.15s ease;
+}
+
+.ad-action-button svg:last-child {
+  margin-left: auto;
+  color: #94a3b8;
+}
+
+.ad-action-button:hover {
+  border-color: #cbd5e1;
+  background: #f8fafc;
+  transform: translateY(-1px);
+}
+
+.ad-action-button.primary {
+  border-color: #bfdbfe;
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+/* ==================================================
+   TOOLBAR
+   ================================================== */
+
+.ad-toolbar {
+  margin-bottom: 12px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ad-search {
+  height: 42px;
+  flex: 1;
+
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  padding: 0 13px;
+
+  border: 1px solid #dfe5ed;
+  border-radius: 10px;
+
+  background: #ffffff;
+  color: #94a3b8;
+}
+
+.ad-search:focus-within {
+  border-color: #93c5fd;
+  box-shadow:
+    0 0 0 3px rgba(59, 130, 246, 0.08);
+}
+
+.ad-search input {
+  width: 100%;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+  color: #0f172a;
+
+  font-size: 12px;
+}
+
+.ad-search input::placeholder {
+  color: #94a3b8;
+}
+
+.ad-filter,
+.ad-refresh-button {
+  height: 42px;
+
+  border: 1px solid #dfe5ed;
+  border-radius: 10px;
+
+  background: #ffffff;
+  color: #334155;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.ad-filter {
+  min-width: 145px;
+  padding: 0 12px;
+  outline: 0;
+}
+
+.ad-refresh-button {
+  padding: 0 13px;
+
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  cursor: pointer;
+}
+
+.ad-refresh-button:hover {
+  background: #f8fafc;
+}
+
+.ad-refresh-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ==================================================
+   TABLE
+   ================================================== */
+
+.ad-table-wrapper {
+  overflow-x: auto;
+
+  border: 1px solid #e1e7ef;
+  border-radius: 15px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 5px 18px rgba(15, 23, 42, 0.03);
+}
+
+.ad-table {
+  width: 100%;
+  min-width: 950px;
+
+  border-collapse: collapse;
+}
+
+.ad-table th {
+  padding: 13px 16px;
+
+  text-align: left;
+
+  border-bottom: 1px solid #e8edf3;
+
+  background: #f8fafc;
+
+  color: #64748b;
+
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ad-table td {
+  padding: 14px 16px;
+
+  border-bottom: 1px solid #edf1f5;
+
+  vertical-align: middle;
+}
+
+.ad-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.ad-table tbody tr {
+  transition: background 0.12s ease;
+}
+
+.ad-table tbody tr:hover {
+  background: #fafcff;
+}
+
+.ad-account-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ad-account-icon {
+  width: 34px;
+  height: 34px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 9px;
+
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.ad-account-cell strong,
+.ad-account-cell span {
+  display: block;
+}
+
+.ad-account-cell strong {
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+
+.ad-account-cell span {
+  margin-top: 3px;
+
+  color: #94a3b8;
+  font-size: 9px;
+}
+
+.ad-owner-cell span,
+.ad-owner-cell strong {
+  display: block;
+}
+
+.ad-owner-cell span {
+  color: #94a3b8;
+  font-size: 9px;
+}
+
+.ad-owner-cell strong {
+  margin-top: 3px;
+  color: #475569;
+  font-size: 11px;
+}
+
+.ad-type-badge {
+  padding: 5px 8px;
+
+  border-radius: 6px;
+
+  background: #f1f5f9;
+  color: #475569;
+
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.ad-balance {
+  font-size: 12px;
+}
+
+.ad-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 5px 8px;
+
+  border-radius: 999px;
+
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.ad-status > span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}
+
+.ad-status.active {
+  background: #ecfdf5;
+  color: #15803d;
+}
+
+.ad-status.active > span {
+  background: #22c55e;
+}
+
+.ad-status.blocked {
+  background: #fff1f2;
+  color: #be123c;
+}
+
+.ad-status.blocked > span {
+  background: #f43f5e;
+}
+
+.ad-status.closed {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+.ad-status.closed > span {
+  background: #94a3b8;
+}
+
+.ad-date {
+  color: #64748b;
+  font-size: 10px;
+}
+
+.ad-row-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+.ad-row-actions button {
+  width: 31px;
+  height: 31px;
+
+  display: grid;
+  place-items: center;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 7px;
+
+  background: #ffffff;
+  color: #64748b;
+
+  cursor: pointer;
+}
+
+.ad-row-actions button:hover {
+  border-color: #bfdbfe;
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+/* ==================================================
+   LOADING / EMPTY
+   ================================================== */
+
+.ad-loading,
+.ad-empty {
+  min-height: 240px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  border: 1px dashed #cbd5e1;
+  border-radius: 15px;
+
+  background: #ffffff;
+
+  color: #64748b;
+}
+
+.ad-loading span,
+.ad-empty p {
+  font-size: 12px;
+}
+
+.ad-empty h3 {
+  margin: 5px 0 0;
+
+  color: #0f172a;
+  font-size: 15px;
+}
+
+.ad-empty p {
+  margin: 0;
+}
+
+.ad-spin {
+  animation: ad-spin 1s linear infinite;
+}
+
+@keyframes ad-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ==================================================
+   BANK DETAILS
+   ================================================== */
+
+.ad-bank-details {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+.ad-detail-card {
+  min-height: 112px;
+  padding: 17px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  border: 1px solid #e1e7ef;
+  border-radius: 13px;
+
+  background: #ffffff;
+}
+
+.ad-detail-card svg {
+  color: #2563eb;
+}
+
+.ad-detail-card span {
+  margin-top: 12px;
+
+  color: #64748b;
+  font-size: 10px;
+}
+
+.ad-detail-card strong {
+  margin-top: 3px;
+
+  font-size: 13px;
+  word-break: break-word;
+}
+
+/* ==================================================
+   DRAWER
+   ================================================== */
+
+.ad-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+
+  display: flex;
+  justify-content: flex-end;
+
+  background: rgba(15, 23, 42, 0.35);
+
+  backdrop-filter: blur(3px);
+}
+
+.ad-drawer {
+  width: min(440px, 100%);
+
+  height: 100%;
+
+  padding: 25px;
+
+  overflow-y: auto;
+
+  background: #ffffff;
+
+  box-shadow:
+    -15px 0 40px rgba(15, 23, 42, 0.12);
+}
+
+.ad-drawer-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.ad-drawer-header span {
+  color: #2563eb;
+
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.ad-drawer-header h2 {
+  margin: 5px 0 0;
+
+  font-size: 22px;
+}
+
+.ad-drawer-header button {
+  width: 34px;
+  height: 34px;
+
+  border: 0;
+  border-radius: 8px;
+
+  background: #f1f5f9;
+  color: #475569;
+
+  font-size: 24px;
+  line-height: 1;
+
+  cursor: pointer;
+}
+
+.ad-drawer-balance {
+  margin-top: 26px;
+  padding: 18px;
+
+  border-radius: 12px;
+
+  background: #0f172a;
+  color: #ffffff;
+}
+
+.ad-drawer-balance span {
+  color: #94a3b8;
+  font-size: 11px;
+}
+
+.ad-drawer-balance strong {
+  display: block;
+  margin-top: 5px;
+
+  font-size: 27px;
+}
+
+.ad-detail-list {
+  margin-top: 22px;
+
+  border-top: 1px solid #e5e7eb;
+}
+
+.ad-detail-list > div {
+  padding: 13px 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  border-bottom: 1px solid #edf1f5;
+}
+
+.ad-detail-list span {
+  color: #94a3b8;
+  font-size: 10px;
+}
+
+.ad-detail-list strong {
+  color: #334155;
+  font-size: 12px;
+
+  word-break: break-all;
+}
+
+.ad-drawer-actions {
+  margin-top: 24px;
+
+  display: grid;
+  gap: 8px;
+}
+
+.ad-drawer-actions button {
+  min-height: 43px;
+  padding: 0 13px;
+
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  border: 1px solid #dfe5ed;
+  border-radius: 9px;
+
+  background: #ffffff;
+  color: #334155;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.ad-drawer-actions button:hover {
+  background: #f8fafc;
+}
+
+.ad-drawer-actions button.danger {
+  border-color: #fecaca;
+  background: #fff1f2;
+  color: #be123c;
+}
+
+/* ==================================================
+   RESPONSIVE
+   ================================================== */
+
+@media (max-width: 1050px) {
+  .ad-stat-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .ad-action-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .ad-bank-details {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .ad-header {
+    height: auto;
+    min-height: 70px;
+    padding: 14px 18px;
+  }
+
+  .ad-header-right {
+    gap: 10px;
+  }
+
+  .ad-system-status {
+    display: none;
+  }
+
+  .ad-admin-profile div:last-child {
+    display: none;
+  }
+
+  .ad-container {
+    width: min(
+      100% - 28px,
+      1440px
+    );
+
+    padding-top: 25px;
+  }
+
+  .ad-page-intro {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .ad-page-intro h1 {
+    font-size: 25px;
+  }
+
+  .ad-primary-button {
+    justify-content: center;
+  }
+
+  .ad-stat-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ad-action-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ad-bank-details {
+    grid-template-columns: 1fr;
+  }
+
+  .ad-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .ad-filter,
+  .ad-refresh-button {
+    width: 100%;
+  }
+
+  .ad-section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

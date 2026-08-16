@@ -21,6 +21,8 @@ const externalProviderRouter = require("./routes/externalProvider");
 const externalProviderPermissionTestRouter = require("./routes/externalProviderPermissionTest");
 const externalAccountsRouter = require("./routes/externalAccounts");
 const externalTransfersRouter = require("./routes/externalTransfers");
+const mpinRouter = require("./routes/mpin");
+const adminDashboardRouter = require("./routes/adminDashboard");
 
 // Initialize database
 require("./database/database");
@@ -89,6 +91,8 @@ app.use("/api/banks", bankContextTestRouter);
 
 app.use("/api/banks", accountsRouter);
 
+app.use("/api/banks", mpinRouter);
+
 app.use("/api/banks", accountFundingRouter);
 
 app.use("/api/banks", accountTransfersRouter);
@@ -107,6 +111,7 @@ app.use("/api/external/v1",externalAccountsRouter);
 
 app.use("/api/external/v1",externalTransfersRouter);
 
+app.use("/api/banks", adminDashboardRouter);
 // --------------------------------------------------
 // 404
 // --------------------------------------------------

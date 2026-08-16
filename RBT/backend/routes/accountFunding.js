@@ -1,9 +1,11 @@
 const express = require("express");
 
 const { requireAuth } = require("../middleware/auth");
+
 const {
   requireBankContext,
 } = require("../middleware/bankContext");
+
 const { requireRole } = require("../middleware/role");
 
 const {
@@ -14,6 +16,10 @@ const {
   seedAccount,
   withdrawAccount,
 } = require("../services/transactionService");
+
+const {
+  verifyMPIN,
+} = require("../services/mpinService");
 
 const router = express.Router();
 
@@ -32,7 +38,8 @@ router.post(
       // Validate request body
       // ----------------------------------------------
 
-      const data = seedAccountSchema.parse(req.body);
+      const data =
+        seedAccountSchema.parse(req.body);
 
       // ----------------------------------------------
       // Idempotency key
@@ -57,21 +64,33 @@ router.post(
       // ----------------------------------------------
 
       const result = seedAccount({
-        bankId: req.params.bankId,
-        accountId: req.params.accountId,
-        amount: data.amountPaise,
+        bankId:
+          req.params.bankId,
+
+        accountId:
+          req.params.accountId,
+
+        amount:
+          data.amountPaise,
+
         currency: "INR",
-        createdByUserId: req.user.userId,
-        reference: data.reference || null,
+
+        createdByUserId:
+          req.user.userId,
+
+        reference:
+          data.reference || null,
+
         idempotencyKey,
       });
 
-      res.status(201).json({
+      return res.status(201).json({
         success: true,
         data: {
           transaction: result,
         },
       });
+
     } catch (error) {
       next(error);
     }
@@ -86,10 +105,10 @@ router.post(
   "/:bankId/accounts/:accountId/withdraw",
   requireAuth,
   requireBankContext,
-  (req, res, next) => {
+  async (req, res, next) => {
     try {
       // ----------------------------------------------
-      // Only customers can use customer withdrawal
+      // Only customers can withdraw
       // ----------------------------------------------
 
       if (req.user.role !== "CUSTOMER") {
@@ -104,10 +123,19 @@ router.post(
       }
 
       // ----------------------------------------------
-      // Validate request body
+      // Extract MPIN
       // ----------------------------------------------
 
-      const data = seedAccountSchema.parse(req.body);
+      const {
+        mpin,
+      } = req.body;
+
+      // ----------------------------------------------
+      // Validate withdrawal request
+      // ----------------------------------------------
+
+      const data =
+        seedAccountSchema.parse(req.body);
 
       // ----------------------------------------------
       // Idempotency key
@@ -128,30 +156,60 @@ router.post(
       }
 
       // ----------------------------------------------
+      // Verify MPIN
+      // ----------------------------------------------
+
+      await verifyMPIN({
+        accountId:
+          req.params.accountId,
+
+        userId:
+          req.user.userId,
+
+        mpin,
+      });
+
+      // ----------------------------------------------
       // Withdraw
       // ----------------------------------------------
 
-      const result = withdrawAccount({
-        bankId: req.params.bankId,
-        accountId: req.params.accountId,
-        amount: data.amountPaise,
-        currency: "INR",
-        userId: req.user.userId,
-        reference: data.reference || null,
-        idempotencyKey,
-      });
+      const result =
+        withdrawAccount({
+          bankId:
+            req.params.bankId,
 
-      res.status(201).json({
+          accountId:
+            req.params.accountId,
+
+          amount:
+            data.amountPaise,
+
+          currency: "INR",
+
+          userId:
+            req.user.userId,
+
+          reference:
+            data.reference || null,
+
+          idempotencyKey,
+        });
+
+      // ----------------------------------------------
+      // Response
+      // ----------------------------------------------
+
+      return res.status(201).json({
         success: true,
         data: {
           transaction: result,
         },
       });
+
     } catch (error) {
       next(error);
     }
   }
 );
-
 
 module.exports = router;
