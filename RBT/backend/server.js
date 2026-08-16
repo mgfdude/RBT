@@ -23,6 +23,7 @@ const externalAccountsRouter = require("./routes/externalAccounts");
 const externalTransfersRouter = require("./routes/externalTransfers");
 const mpinRouter = require("./routes/mpin");
 const adminDashboardRouter = require("./routes/adminDashboard");
+const adminCustomersRouter = require("./routes/adminCustomers");
 
 // Initialize database
 require("./database/database");
@@ -112,6 +113,9 @@ app.use("/api/external/v1",externalAccountsRouter);
 app.use("/api/external/v1",externalTransfersRouter);
 
 app.use("/api/banks", adminDashboardRouter);
+
+app.use("/api/banks",adminCustomersRouter);
+
 // --------------------------------------------------
 // 404
 // --------------------------------------------------
