@@ -1,0 +1,291 @@
+.customer-dashboard {
+  min-height: 100vh;
+  padding: 32px;
+  background: #f8fafc;
+}
+
+.dashboard-header {
+  max-width: 1200px;
+  margin: 0 auto 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.dashboard-eyebrow {
+  margin: 0 0 6px;
+  color: #2563eb;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.dashboard-header h1 {
+  margin: 0;
+  font-size: 30px;
+  letter-spacing: -0.03em;
+}
+
+.dashboard-subtitle {
+  margin: 8px 0 0;
+  color: #64748b;
+}
+
+.dashboard-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dashboard-avatar {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #0f172a;
+  color: white;
+  font-weight: 700;
+}
+
+.dashboard-user strong,
+.dashboard-user span {
+  display: block;
+}
+
+.dashboard-user span {
+  margin-top: 3px;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.balance-card {
+  max-width: 1200px;
+  margin: 0 auto 32px;
+  padding: 28px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  border-radius: 20px;
+  background: #0f172a;
+  color: white;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.15);
+}
+
+.balance-card-icon {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.balance-card p {
+  margin: 0 0 6px;
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+.balance-card h2 {
+  margin: 0;
+  font-size: 32px;
+}
+
+.dashboard-section {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-heading {
+  margin-bottom: 16px;
+}
+
+.section-heading h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.section-heading p {
+  margin: 4px 0 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.account-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(280px, 1fr)
+  );
+  gap: 18px;
+}
+
+.account-card {
+  padding: 22px;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  background: white;
+  box-shadow: 0 8px 25px rgba(15, 23, 42, 0.04);
+}
+
+.account-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.account-icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.account-status {
+  padding: 5px 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.account-status.active {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.account-status.blocked {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.account-status.closed {
+  background: #e2e8f0;
+  color: #475569;
+}
+
+.account-type {
+  margin-top: 22px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #64748b;
+}
+
+.account-number {
+  margin-top: 7px;
+  color: #475569;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+}
+
+.account-balance {
+  margin-top: 20px;
+  font-size: 25px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.quick-actions {
+  max-width: 1200px;
+  margin: 24px auto 0;
+  display: flex;
+  gap: 12px;
+}
+
+.quick-action {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: white;
+  color: #0f172a;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.quick-action:hover {
+  background: #f1f5f9;
+}
+
+.dashboard-error {
+  max-width: 1200px;
+  margin: 0 auto 20px;
+  padding: 13px 16px;
+  border-radius: 10px;
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.dashboard-loading,
+.empty-state {
+  padding: 50px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1px dashed #cbd5e1;
+  border-radius: 18px;
+  background: white;
+  color: #64748b;
+}
+
+.empty-state h3 {
+  margin: 5px 0 0;
+  color: #0f172a;
+}
+
+.empty-state p {
+  margin: 0;
+}
+
+.loading-icon {
+  animation: dashboard-spin 1s linear infinite;
+}
+
+@keyframes dashboard-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 700px) {
+  .customer-dashboard {
+    padding: 20px 16px;
+  }
+
+  .dashboard-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .dashboard-header h1 {
+    font-size: 25px;
+  }
+
+  .dashboard-user {
+    width: 100%;
+  }
+
+  .balance-card {
+    padding: 22px;
+  }
+
+  .balance-card h2 {
+    font-size: 27px;
+  }
+
+  .quick-actions {
+    flex-direction: column;
+  }
+
+  .quick-action {
+    justify-content: center;
+  }
+}

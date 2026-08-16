@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="x-apple-disable-message-reformatting">
+<title>UPI payment successful</title>
+<style>
+body{margin:0;padding:0;background:#f4f7fb;color:#16243a;font-family:Arial,Helvetica,sans-serif;-webkit-text-size-adjust:100%}
+table{border-collapse:collapse}
+.wrapper{width:100%;background:#f4f7fb}
+.container{width:100%;max-width:600px;margin:0 auto;background:#ffffff}
+.pad{padding:32px}
+.brand{font-size:22px;font-weight:700;letter-spacing:.4px;color:#0b1f3a}
+.accent{height:4px;background:#1769e0}
+h1{margin:0 0 10px;font-size:25px;line-height:1.25;color:#0b1f3a}
+p{margin:0 0 14px;font-size:15px;line-height:1.6;color:#526174}
+.card{border:1px solid #dce4ee;border-radius:12px;background:#fbfcfe}
+.label{font-size:12px;line-height:1.4;color:#718096;text-transform:uppercase;letter-spacing:.6px}
+.value{font-size:16px;line-height:1.5;color:#16243a;font-weight:600}
+.otp{font-size:34px;line-height:1.2;letter-spacing:9px;font-weight:700;color:#1769e0;text-align:center}
+.status{display:inline-block;padding:7px 12px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:.5px}
+.success{color:#147a4b;background:#e9f8f0}
+.failed{color:#b42318;background:#fdeceb}
+.pending{color:#9a6700;background:#fff5d6}
+.reversed{color:#7a3e9d;background:#f5eafd}
+.info{color:#1769e0;background:#eaf2ff}
+.warn{color:#8a5b00;background:#fff6df}
+.footer{padding:24px 32px 30px;background:#f7f9fc;border-top:1px solid #e4eaf2}
+.footer p{margin:0 0 6px;font-size:12px;line-height:1.55;color:#718096}
+@media only screen and (max-width:620px){
+  .pad{padding:24px 18px!important}
+  .footer{padding:20px 18px 24px!important}
+  h1{font-size:22px}
+  .otp{font-size:30px;letter-spacing:7px}
+}
+</style>
+</head>
+<body>
+<table role="presentation" width="100%" class="wrapper">
+<tr><td align="center">
+<table role="presentation" width="100%" class="container">
+<tr><td class="accent"></td></tr>
+<tr><td class="pad">
+<div class="brand">RBT Bank</div>
+<div style="height:20px;line-height:20px">&nbsp;</div>
+<h1>UPI payment successful</h1><p>Your UPI payment was completed successfully.</p><table role="presentation" width="100%" class="card"><tr><td style="padding:13px 16px;border-bottom:1px solid #e8edf3"><div class="label">Amount</div><div class="value">{{CURRENCY}} {{AMOUNT}}</div></td></tr><tr><td style="padding:13px 16px;border-bottom:1px solid #e8edf3"><div class="label">Status</div><div class="value"><span class="status success">{{STATUS}}</span></div></td></tr><tr><td style="padding:13px 16px;border-bottom:1px solid #e8edf3"><div class="label">Account</div><div class="value">{{ACCOUNT_NUMBER}}</div></td></tr><tr><td style="padding:13px 16px;border-bottom:1px solid #e8edf3"><div class="label">VPA</div><div class="value">{{VPA}}</div></td></tr><tr><td style="padding:13px 16px;border-bottom:1px solid #e8edf3"><div class="label">Transaction ID</div><div class="value">{{TRANSACTION_ID}}</div></td></tr><tr><td style="padding:13px 16px;border-bottom:1px solid #e8edf3"><div class="label">Reference</div><div class="value">{{REFERENCE}}</div></td></tr><tr><td style="padding:13px 16px;border-bottom:1px solid #e8edf3"><div class="label">Date</div><div class="value">{{DATE_TIME}}</div></td></tr></table>
+</td></tr>
+<tr><td class="footer">
+<p><strong>RBT Bank</strong><br>Automated banking notification</p>
+<p>This is an automated message. Please do not reply.</p>
+<p>For your security, RBT Bank will never ask for your password, OTP, or API secret by email.</p>
+</td></tr>
+</table>
+</td></tr>
+</table>
+</body>
+</html>
