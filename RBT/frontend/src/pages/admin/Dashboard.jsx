@@ -1,3 +1,4 @@
+import { useToast } from "../../context/ToastContext";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
 import {
@@ -108,6 +109,9 @@ function ActionButton({
 
 function Dashboard() {
 
+  const [confirmAction, setConfirmAction] =
+  useState(null);
+    
   const navigate = useNavigate();  
   const { user } = useAuth();
    
@@ -151,13 +155,38 @@ function Dashboard() {
           response.data?.data?.accounts || []
         );
       } catch (err) {
-        if (!mounted) return;
+  if (!mounted) return;
 
-        setError(
-          err.response?.data?.error?.message ||
-            "Unable to load bank accounts."
-        );
-      } finally {
+  if (!err.response) {
+    toast.error(
+      "Server unavailable",
+      "Unable to connect to the banking server."
+    );
+  } else if (err.response.status === 404) {
+    toast.error(
+      "Route not found",
+      "The requested banking API endpoint does not exist."
+    );
+  } else if (err.response.status === 401) {
+    toast.error(
+      "Session expired",
+      "Please sign in again."
+    );
+  } else if (err.response.status === 403) {
+    toast.error(
+      "Access denied",
+      "You don't have permission to access these accounts."
+    );
+  } else {
+    toast.error(
+      "Unable to load accounts",
+      err.response?.data?.error?.message ||
+        "An unexpected server error occurred."
+    );
+  }
+
+  setError("");
+} finally {
         if (mounted) {
           setLoading(false);
         }
@@ -304,54 +333,51 @@ function Dashboard() {
 }
 
   function handleDeposit(account) {
-    setSelectedAccount(account);
+  setSelectedAccount(account);
 
-    alert(
-      `Deposit action selected for ${maskAccountNumber(
-        account.account_number
-      )}`
-    );
-  }
+  toast.info(
+    "Deposit",
+    `Deposit interface for ${maskAccountNumber(
+      account.account_number
+    )} is coming next.`
+  );
+}
 
   function handleWithdraw(account) {
-    setSelectedAccount(account);
+  setSelectedAccount(account);
 
-    alert(
-      `Withdrawal action selected for ${maskAccountNumber(
-        account.account_number
-      )}`
-    );
-  }
+  toast.info(
+    "Withdrawal",
+    `Withdrawal interface for ${maskAccountNumber(
+      account.account_number
+    )} is coming next.`
+  );
+}
 
   function handleBlock(account) {
-    setSelectedAccount(account);
+  setConfirmAction({
+    action: "BLOCK",
+    account,
+  });
+}
 
-    alert(
-      `Block action selected for ${maskAccountNumber(
-        account.account_number
-      )}`
-    );
-  }
-
-  function handleUnblock(account) {
-    setSelectedAccount(account);
-
-    alert(
-      `Unblock action selected for ${maskAccountNumber(
-        account.account_number
-      )}`
-    );
-  }
+function handleUnblock(account) {
+  setConfirmAction({
+    action: "UNBLOCK",
+    account,
+  });
+}
 
   function handleTransactions(account) {
-    setSelectedAccount(account);
+  setSelectedAccount(account);
 
-    alert(
-      `Transaction history selected for ${maskAccountNumber(
-        account.account_number
-      )}`
-    );
-  }
+  toast.info(
+    "Transactions",
+    `Transaction history for ${maskAccountNumber(
+      account.account_number
+    )} will be available here.`
+  );
+}
 
   const bankName =
     user?.bankName ||
@@ -1182,6 +1208,48 @@ function Dashboard() {
 
         </div>
       )}
+
+      <ConfirmModal
+  open={Boolean(confirmAction)}
+  title={
+    confirmAction?.action === "BLOCK"
+      ? "Block this account?"
+      : "Unblock this account?"
+  }
+  message={
+    confirmAction
+      ? confirmAction.action === "BLOCK"
+        ? `Are you sure you want to block account ${maskAccountNumber(
+            confirmAction.account.account_number
+          )}?`
+        : `Are you sure you want to unblock account ${maskAccountNumber(
+            confirmAction.account.account_number
+          )}?`
+      : ""
+  }
+  confirmText={
+    confirmAction?.action === "BLOCK"
+      ? "Block Account"
+      : "Unblock Account"
+  }
+  cancelText="Cancel"
+  type={
+    confirmAction?.action === "BLOCK"
+      ? "danger"
+      : "success"
+  }
+  onCancel={() => setConfirmAction(null)}
+  onConfirm={() => {
+    toast.info(
+      confirmAction.action === "BLOCK"
+        ? "Block account"
+        : "Unblock account",
+      "This banking operation will be connected to the API next."
+    );
+
+    setConfirmAction(null);
+  }}
+/>
 
     </main>
   );

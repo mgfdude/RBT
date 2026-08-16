@@ -1,3 +1,4 @@
+import { useToast } from "../../context/ToastContext";
 import { useEffect, useMemo, useState } from "react";
 import {
   ArrowDownLeft,
@@ -36,7 +37,9 @@ function maskAccountNumber(accountNumber) {
 }
 
 function Dashboard() {
+
   const { user } = useAuth();
+  const toast = useToast();
 
   const [accounts, setAccounts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -68,12 +71,38 @@ function Dashboard() {
           );
         }
       } catch (err) {
-        if (mounted) {
-          setError(
-            err.response?.data?.error?.message ||
-              "Unable to load your accounts."
-          );
-        }
+  if (!mounted) return;
+
+  if (!err.response) {
+    toast.error(
+      "Server unavailable",
+      "Unable to connect to the banking server."
+    );
+  } else if (err.response.status === 404) {
+    toast.error(
+      "Route not found",
+      "The accounts service could not be found."
+    );
+  } else if (err.response.status === 401) {
+    toast.error(
+      "Session expired",
+      "Please sign in again."
+    );
+  } else if (err.response.status === 403) {
+    toast.error(
+      "Access denied",
+      "You don't have permission to view these accounts."
+    );
+  } else {
+    toast.error(
+      "Unable to load accounts",
+      err.response?.data?.error?.message ||
+        "An unexpected server error occurred."
+    );
+  }
+
+  setError("");
+
       } finally {
         if (mounted) {
           setLoading(false);
@@ -131,22 +160,30 @@ function Dashboard() {
     primaryAccount?.currency || "INR";
 
   async function copyAccountNumber() {
-    if (!accountNumber) return;
+  if (!accountNumber) return;
 
-    try {
-      await navigator.clipboard.writeText(
-        accountNumber
-      );
+  try {
+    await navigator.clipboard.writeText(
+      accountNumber
+    );
 
-      setCopied(true);
+    setCopied(true);
 
-      setTimeout(() => {
-        setCopied(false);
-      }, 1800);
-    } catch {
-      // Clipboard may be unavailable
-    }
+    toast.success(
+      "Copied",
+      "Account number copied to clipboard."
+    );
+
+    setTimeout(() => {
+      setCopied(false);
+    }, 1800);
+  } catch {
+    toast.error(
+      "Copy failed",
+      "Unable to copy the account number."
+    );
   }
+}
 
   function handleTransfer() {
     window.location.href = "/transfer";

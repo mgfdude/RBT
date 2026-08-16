@@ -1,3 +1,5 @@
+import { useToast } from "../../context/ToastContext";
+import ConfirmModal from "../../components/ConfirmModal";
 import { useMemo, useState } from "react";
 import {
   ArrowLeft,
@@ -94,6 +96,15 @@ function getPasswordStrength(password) {
 }
 
 function OpenAccount() {
+
+  const toast = useToast();
+
+const [confirmOpen, setConfirmOpen] =
+  useState(false);
+
+const [creating, setCreating] =
+  useState(false);
+
   const { user } = useAuth();
 
   const bankId =
@@ -224,50 +235,166 @@ function OpenAccount() {
   }
 
   async function handleSubmit(event) {
-    event.preventDefault();
+  event.preventDefault();
 
+  setError("");
+
+  const validationError =
+    validateForm();
+
+  if (validationError) {
+    toast.warning(
+      "Check the form",
+      validationError
+    );
+
+    return;
+  }
+
+  setConfirmOpen(true);
+}
+
+  async function confirmCreateAccount() {
+  try {
+    setCreating(true);
     setError("");
 
-    const validationError = validateForm();
+    const response = await api.post(
+      `/banks/${bankId}/admin/customers`,
+      {
+        fullName:
+          form.fullName.trim(),
 
-    if (validationError) {
-      setError(validationError);
+        email:
+          form.email.trim() ||
+          undefined,
+
+        phone:
+          form.phone.trim(),
+
+        username:
+          form.username.trim(),
+
+        accountType:
+          form.accountType,
+
+        currency:
+          form.currency,
+
+        temporaryPassword:
+          form.temporaryPassword,
+      }
+    );
+
+    const result =
+      response.data?.data ||
+      response.data;
+
+    setConfirmOpen(false);
+
+    setSuccess(result);
+
+    toast.success(
+      "Account created",
+      "The customer account was opened successfully."
+    );
+  } catch (err) {
+    const status =
+      err.response?.status;
+
+    const code =
+      err.response?.data?.error?.code;
+
+    const backendMessage =
+      err.response?.data?.error?.message;
+
+    setConfirmOpen(false);
+
+    if (!err.response) {
+      toast.error(
+        "Banking server unavailable",
+        "Unable to connect to the banking server. Make sure the backend is running."
+      );
+
       return;
     }
 
-    try {
-      setLoading(true);
-
-      const response = await api.post(
-        `/banks/${bankId}/admin/customers`,
-        {
-          fullName: form.fullName.trim(),
-          email: form.email.trim() || undefined,
-          phone: form.phone.trim(),
-          username: form.username.trim(),
-          accountType: form.accountType,
-          currency: form.currency,
-          temporaryPassword:
-            form.temporaryPassword,
-        }
+    if (status === 404) {
+      toast.error(
+        "Route not found",
+        "The account-opening API endpoint could not be found."
       );
 
-      const result =
-        response.data?.data ||
-        response.data;
-
-      setSuccess(result);
-    } catch (err) {
-      const message =
-        err.response?.data?.error?.message ||
-        err.response?.data?.message ||
-        "Unable to open the customer account.";
-
-      setError(message);
-    } finally {
-      setLoading(false);
+      return;
     }
+
+    if (
+      status === 409 &&
+      code ===
+        "USERNAME_ALREADY_EXISTS"
+    ) {
+      toast.warning(
+        "Username already exists",
+        "Choose another username for this customer."
+      );
+
+      return;
+    }
+
+    if (
+      status === 409 &&
+      code ===
+        "EMAIL_ALREADY_EXISTS"
+    ) {
+      toast.warning(
+        "Email already exists",
+        "This email address is already registered."
+      );
+
+      return;
+    }
+
+    if (
+      status === 409 &&
+      code ===
+        "PHONE_ALREADY_EXISTS"
+    ) {
+      toast.warning(
+        "Phone already exists",
+        "This phone number is already registered."
+      );
+
+      return;
+    }
+
+    if (status === 403) {
+      toast.error(
+        "Permission denied",
+        backendMessage ||
+          "You do not have permission to perform this action."
+      );
+
+      return;
+    }
+
+    if (status === 401) {
+      toast.error(
+        "Session expired",
+        "Please sign in again."
+      );
+
+      return;
+    }
+
+    toast.error(
+      "Account opening failed",
+      backendMessage ||
+        "Unable to open the customer account."
+    );
+  } finally {
+    setCreating(false);
   }
+}
 
   function resetForm() {
     setSuccess(null);
@@ -810,6 +937,23 @@ function OpenAccount() {
           </div>
         </form>
       </div>
+
+              <ConfirmModal
+  open={confirmOpen}
+  title="Open customer account?"
+  message={`You are about to create a ${form.accountType.toLowerCase()} account for ${form.fullName || "this customer"}. The account will start with a balance of ₹0.00.`}
+  confirmText="Create Account"
+  cancelText="Review Again"
+  type="success"
+  loading={creating}
+  onCancel={() => {
+    if (!creating) {
+      setConfirmOpen(false);
+    }
+  }}
+  onConfirm={confirmCreateAccount}
+/>
+
     </div>
   );
 }
