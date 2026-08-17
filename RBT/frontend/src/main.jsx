@@ -11,6 +11,7 @@ import "./styles/dashboard.css";
 import "./styles/ad-dashboard.css";
 import "./styles/open-account.css";
 import "./styles/notifications.css";
+import "./styles/mpin.css";
 
 ReactDOM.createRoot(
   document.getElementById("root")

@@ -1,0 +1,501 @@
+.mpin-page {
+  min-height: 100vh;
+  background:
+    radial-gradient(
+      circle at top right,
+      #eef2ff 0,
+      transparent 32%
+    ),
+    #f7f9fc;
+
+  padding: 42px 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  color: #172033;
+}
+
+.mpin-card {
+  width: 100%;
+  max-width: 520px;
+
+  background: #ffffff;
+
+  border: 1px solid #e7eaf0;
+  border-radius: 22px;
+
+  padding: 30px;
+
+  box-shadow:
+    0 20px 50px rgba(16, 24, 40, 0.08);
+}
+
+/* -----------------------------------------
+   BACK
+----------------------------------------- */
+
+.mpin-back {
+  border: 0;
+  background: transparent;
+
+  color: #667085;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  padding: 0;
+  margin-bottom: 28px;
+}
+
+.mpin-back:hover {
+  color: #172033;
+}
+
+/* -----------------------------------------
+   HEADER
+----------------------------------------- */
+
+.mpin-header {
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+}
+
+.mpin-icon {
+  width: 52px;
+  height: 52px;
+
+  flex: 0 0 52px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 15px;
+
+  background: #eef2ff;
+  color: #3730a3;
+}
+
+.mpin-eyebrow {
+  display: block;
+
+  color: #667085;
+
+  font-size: 10px;
+  font-weight: 850;
+
+  letter-spacing: 0.1em;
+}
+
+.mpin-header h1 {
+  margin: 5px 0 6px;
+
+  font-size: 29px;
+  line-height: 1.15;
+
+  color: #101828;
+}
+
+.mpin-header p {
+  margin: 0;
+
+  color: #667085;
+
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* -----------------------------------------
+   SECURITY
+----------------------------------------- */
+
+.mpin-security {
+  margin-top: 25px;
+
+  padding: 14px;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+
+  border: 1px solid #d1fadf;
+  background: #f0fdf4;
+
+  border-radius: 13px;
+
+  color: #027a48;
+}
+
+.mpin-security svg {
+  flex: 0 0 auto;
+  margin-top: 1px;
+}
+
+.mpin-security strong {
+  display: block;
+
+  font-size: 13px;
+}
+
+.mpin-security span {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #667085;
+
+  font-size: 12px;
+}
+
+/* -----------------------------------------
+   FORM
+----------------------------------------- */
+
+.mpin-form {
+  margin-top: 27px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.mpin-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mpin-field label {
+  font-size: 13px;
+  font-weight: 750;
+
+  color: #344054;
+}
+
+.mpin-field small {
+  color: #98a2b3;
+
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+/* -----------------------------------------
+   SELECT
+----------------------------------------- */
+
+.mpin-field select {
+  width: 100%;
+
+  height: 48px;
+
+  padding: 0 13px;
+
+  border: 1px solid #d0d5dd;
+  border-radius: 11px;
+
+  background: #ffffff;
+
+  color: #172033;
+
+  font-size: 14px;
+
+  outline: none;
+
+  cursor: pointer;
+}
+
+.mpin-field select:focus {
+  border-color: #6366f1;
+
+  box-shadow:
+    0 0 0 3px rgba(99, 102, 241, 0.12);
+}
+
+/* -----------------------------------------
+   MPIN INPUT
+----------------------------------------- */
+
+.mpin-input {
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+
+  border: 1px solid #d0d5dd;
+  border-radius: 11px;
+
+  overflow: hidden;
+
+  background: #ffffff;
+}
+
+.mpin-input:focus-within {
+  border-color: #6366f1;
+
+  box-shadow:
+    0 0 0 3px rgba(99, 102, 241, 0.12);
+}
+
+.mpin-input input {
+  flex: 1;
+
+  width: 100%;
+
+  height: 100%;
+
+  border: 0;
+  outline: 0;
+
+  padding: 0 14px;
+
+  font-size: 18px;
+
+  letter-spacing: 0.18em;
+
+  color: #172033;
+
+  background: transparent;
+}
+
+.mpin-input input::placeholder {
+  letter-spacing: normal;
+
+  color: #98a2b3;
+
+  font-size: 13px;
+}
+
+.mpin-input button {
+  width: 48px;
+  height: 100%;
+
+  border: 0;
+
+  background: transparent;
+
+  color: #667085;
+
+  display: grid;
+  place-items: center;
+
+  cursor: pointer;
+}
+
+.mpin-input button:hover {
+  background: #f8fafc;
+
+  color: #172033;
+}
+
+.mpin-input button:disabled {
+  cursor: not-allowed;
+
+  opacity: 0.5;
+}
+
+/* -----------------------------------------
+   ERROR
+----------------------------------------- */
+
+.mpin-error {
+  padding: 12px 13px;
+
+  border-radius: 10px;
+
+  border: 1px solid #fecdca;
+
+  background: #fef3f2;
+
+  color: #b42318;
+
+  font-size: 12px;
+  font-weight: 650;
+
+  line-height: 1.5;
+}
+
+/* -----------------------------------------
+   SUBMIT
+----------------------------------------- */
+
+.mpin-submit {
+  height: 50px;
+
+  border: 0;
+  border-radius: 11px;
+
+  background: #172033;
+
+  color: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  font-size: 14px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.mpin-submit:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.mpin-submit:disabled {
+  opacity: 0.45;
+
+  cursor: not-allowed;
+}
+
+/* -----------------------------------------
+   EMPTY
+----------------------------------------- */
+
+.mpin-empty-icon {
+  width: 58px;
+  height: 58px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 17px;
+
+  background: #fef3f2;
+  color: #b42318;
+
+  margin-bottom: 18px;
+}
+
+.mpin-card > h1 {
+  font-size: 25px;
+
+  margin: 0 0 8px;
+}
+
+.mpin-description {
+  color: #667085;
+
+  line-height: 1.6;
+
+  font-size: 14px;
+
+  margin-bottom: 22px;
+}
+
+.mpin-secondary-button {
+  height: 45px;
+
+  padding: 0 17px;
+
+  border: 1px solid #d0d5dd;
+
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  color: #172033;
+
+  font-weight: 750;
+
+  cursor: pointer;
+}
+
+/* -----------------------------------------
+   LOADING
+----------------------------------------- */
+
+.mpin-loading {
+  width: 100%;
+  max-width: 520px;
+
+  min-height: 260px;
+
+  background: #ffffff;
+
+  border: 1px solid #e7eaf0;
+  border-radius: 20px;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  gap: 12px;
+
+  color: #667085;
+
+  box-shadow:
+    0 20px 50px rgba(16, 24, 40, 0.06);
+}
+
+.mpin-spinner {
+  animation: mpin-spin 0.9s linear infinite;
+}
+
+@keyframes mpin-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* -----------------------------------------
+   FOOTER
+----------------------------------------- */
+
+.mpin-footer {
+  margin: 23px 0 0;
+
+  text-align: center;
+
+  color: #98a2b3;
+
+  font-size: 11px;
+
+  line-height: 1.5;
+}
+
+/* -----------------------------------------
+   MOBILE
+----------------------------------------- */
+
+@media (max-width: 600px) {
+  .mpin-page {
+    padding: 20px 12px;
+  }
+
+  .mpin-card {
+    padding: 22px 18px;
+
+    border-radius: 18px;
+  }
+
+  .mpin-header {
+    gap: 11px;
+  }
+
+  .mpin-icon {
+    width: 46px;
+    height: 46px;
+    flex-basis: 46px;
+  }
+
+  .mpin-header h1 {
+    font-size: 24px;
+  }
+}

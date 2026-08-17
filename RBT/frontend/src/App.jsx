@@ -14,6 +14,13 @@ import OpenAccount from "./pages/admin/OpenAccount";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 
+import Accounts from "./pages/customer/Accounts";
+import AccountDetails from "./pages/customer/AccountDetails";
+import Transactions from "./pages/customer/Transactions";
+import TransactionDetails from "./pages/customer/TransactionDetails";
+import Transfer from "./pages/customer/Transfer";
+import MPINSetup from "./pages/customer/MPINSetup";
+
 function App() {
   return (
     <BrowserRouter>
@@ -101,6 +108,67 @@ function App() {
               loginPath="/admin/login/alpha"
             >
               <OpenAccount />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+  path="/accounts"
+  element={
+    <ProtectedRoute role="CUSTOMER">
+      <Accounts />
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/accounts/:accountId"
+  element={
+    <ProtectedRoute role="CUSTOMER">
+      <AccountDetails />
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/transactions"
+  element={
+    <ProtectedRoute role="CUSTOMER">
+      <Transactions />
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/transactions/:transactionId"
+  element={
+    <ProtectedRoute role="CUSTOMER">
+      <TransactionDetails />
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/transfer"
+  element={
+    <ProtectedRoute role="CUSTOMER">
+      <Transfer />
+    </ProtectedRoute>
+  }
+/>
+
+{/* =========================================
+            CUSTOMER — MPIN SETUP
+            ========================================= */}
+
+        <Route
+          path="/security/mpin"
+          element={
+            <ProtectedRoute
+              role="CUSTOMER"
+              loginPath="/login/alpha"
+            >
+              <MPINSetup />
             </ProtectedRoute>
           }
         />
